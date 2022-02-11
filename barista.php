@@ -10,7 +10,7 @@
  * Author:            WP Busters
  * Author URI:        https://wpbusters.com/
  *
- * Version:           0.4.1
+ * Version:           0.4.2
  * Requires at least: 5.8
  * Tested up to:      5.9
  * Requires PHP:      7.1
@@ -22,11 +22,10 @@ declare(strict_types=1);
 
 namespace Barista;
 
-use Puc_v4_Factory;
-
 define( 'BARISTA_PATH', \plugin_dir_path( __FILE__ ) );
 define( 'BARISTA_URL', \plugins_url( '/', __FILE__ ) );
-define( 'BARISTA_VERSION', '0.4.1' );
+define( 'BARISTA_PLUGIN_FILE', __FILE__ );
+define( 'BARISTA_VERSION', '0.4.2' );
 define( 'BARISTA_DEVELOPMENT', true );
 
 

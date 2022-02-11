@@ -5,3 +5,6 @@
 ## [0.4.1] - Fix
 
 - Updating fix
+## [0.4.2] - Fix
+
+- Updating fix
