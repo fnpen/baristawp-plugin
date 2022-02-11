@@ -10,7 +10,7 @@
  * Author:            WP Busters
  * Author URI:        https://wpbusters.com/
  *
- * Version:           0.4.0
+ * Version:           0.4.1
  * Requires at least: 5.8
  * Tested up to:      5.9
  * Requires PHP:      7.1
@@ -26,7 +26,7 @@ use Puc_v4_Factory;
 
 define( 'BARISTA_PATH', \plugin_dir_path( __FILE__ ) );
 define( 'BARISTA_URL', \plugins_url( '/', __FILE__ ) );
-define( 'BARISTA_VERSION', '0.4.0' );
+define( 'BARISTA_VERSION', '0.4.1' );
 define( 'BARISTA_DEVELOPMENT', true );
 
 
@@ -35,6 +35,7 @@ define( 'BARISTA_COMMAND_PRIORITY_FEATURES', 2000 );
 define( 'BARISTA_COMMAND_PRIORITY_ACTIONS', 3000 );
 
 require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/inc/updating.php';
 require __DIR__ . '/inc/admin.php';
 require __DIR__ . '/inc/frontend.php';
 require __DIR__ . '/inc/assets.php';
@@ -62,13 +63,4 @@ add_action( 'admin_init', __NAMESPACE__ . '\\admin_init' );
  */
 function admin_init() {
 	do_action( 'barista_init_commands' );
-}
-
-if( '0.4.0' !== BARISTA_VERSION ) {
-	$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-		'https://github.com/fnpen/baristawp-plugin/',
-		__FILE__,
-		'barista',
-		1
-	);
 }

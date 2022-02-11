@@ -2,3 +2,6 @@
 
 - WooCommerce Settings sections added with third party plugins support.
 - Added automatic updating.
+## [0.4.1] - Fix
+
+- Updating fix
