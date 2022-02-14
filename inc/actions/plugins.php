@@ -9,23 +9,18 @@
 
 namespace Barista\Actions\plugins;
 
-add_action( 'barista_init_commands', __NAMESPACE__ . '\\init_actions' );
+use Barista\Collection;
+
+add_action( 'barista_init_commands', __NAMESPACE__ . '\\add', 200 );
 
 const COMMAND_NAME = 'plugins';
 
 /**
- * Init hooks.
- */
-function init_actions() {
-	add_filter( 'barista_commands_collection', __NAMESPACE__ . '\\add', 200, 1 );
-}
-
-/**
  * Adds commands to collection.
- *
- * @param array $collection Commands collection.
  */
-function add( array $collection ): array {
+function add() {
+	$collection = [];
+
 	$collection[] = [
 		'id'       => COMMAND_NAME,
 		'title'    => __( 'Plugins', 'barista' ),
@@ -90,5 +85,5 @@ function add( array $collection ): array {
 		];
 	}
 
-	return $collection;
+	Collection::get_instance()->add_command( $collection );
 }

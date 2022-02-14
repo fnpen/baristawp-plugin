@@ -9,23 +9,25 @@ declare(strict_types=1);
 
 namespace Barista\Actions\flush_rewrite_rules;
 
+use Barista\Collection;
+
 add_action( 'barista_init_commands', __NAMESPACE__ . '\\init_actions' );
 
 /**
  * Init hooks.
  */
 function init_actions() {
-	add_filter( 'barista_commands_collection', __NAMESPACE__ . '\\add', 200, 1 );
+	add();
 	add_filter( 'barista_command_flush_rewrite_rules_soft', __NAMESPACE__ . '\\run_soft', 200, 1 );
 	add_filter( 'barista_command_flush_rewrite_rules_hard', __NAMESPACE__ . '\\run_hard', 200, 1 );
 }
 
 /**
  * Adds commands to collection.
- *
- * @param array $collection Commands collection.
  */
-function add( array $collection ): array {
+function add() {
+	$collection = [];
+
 	$collection[] = [
 		'id'          => 'flush_rewrite_rules_soft',
 		'title'       => __( 'Flush Rewrite Rules › Just update rewrite_rules option (soft flush)', 'barista' ),
@@ -35,6 +37,7 @@ function add( array $collection ): array {
 		'group'       => __( 'Actions', 'barista' ),
 		'position'    => BARISTA_COMMAND_PRIORITY_ACTIONS,
 	];
+
 	$collection[] = [
 		'id'          => 'flush_rewrite_rules_hard',
 		'title'       => __( 'Flush Rewrite Rules › With .htaccess updating (hard flush)', 'barista' ),
@@ -44,7 +47,8 @@ function add( array $collection ): array {
 		'group'       => __( 'Actions', 'barista' ),
 		'position'    => BARISTA_COMMAND_PRIORITY_ACTIONS,
 	];
-	return $collection;
+
+	Collection::get_instance()->add_command( $collection );
 }
 
 /**

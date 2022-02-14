@@ -10,7 +10,7 @@
  * Author:            WP Busters
  * Author URI:        https://wpbusters.com/
  *
- * Version:           0.4.2
+ * Version:           0.6.37
  * Requires at least: 5.8
  * Tested up to:      5.9
  * Requires PHP:      7.1
@@ -25,8 +25,14 @@ namespace Barista;
 define( 'BARISTA_PATH', \plugin_dir_path( __FILE__ ) );
 define( 'BARISTA_URL', \plugins_url( '/', __FILE__ ) );
 define( 'BARISTA_PLUGIN_FILE', __FILE__ );
-define( 'BARISTA_VERSION', '0.4.2' );
-define( 'BARISTA_DEVELOPMENT', true );
+define( 'BARISTA_VERSION', '0.6.37' );
+
+// define( 'BARISTA_DEMO', 'animate-up' ); phpcs:ignore Squiz.PHP.CommentedOutCode.Found.
+
+if ( ! defined( 'BARISTA_DEVELOPMENT' ) ) {
+	define( 'BARISTA_DEVELOPMENT', false );
+}
+
 
 
 define( 'BARISTA_COMMAND_PRIORITY_WP_DASHBOARD', 1000 );
@@ -34,6 +40,7 @@ define( 'BARISTA_COMMAND_PRIORITY_FEATURES', 2000 );
 define( 'BARISTA_COMMAND_PRIORITY_ACTIONS', 3000 );
 
 require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/classes/class-collection.php';
 require __DIR__ . '/inc/updating.php';
 require __DIR__ . '/inc/admin.php';
 require __DIR__ . '/inc/frontend.php';
@@ -61,5 +68,6 @@ add_action( 'admin_init', __NAMESPACE__ . '\\admin_init' );
  * Init all hooks.
  */
 function admin_init() {
+	do_action( 'barista_init' );
 	do_action( 'barista_init_commands' );
 }

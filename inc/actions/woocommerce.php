@@ -9,31 +9,25 @@ declare(strict_types=1);
 
 namespace Barista\Actions\woocommerce;
 
+use Barista\Collection;
 use WC_Admin_Settings;
 
-add_action( 'barista_init_commands', __NAMESPACE__ . '\\init_actions' );
-
-/**
- * Init hooks.
- */
-function init_actions() {
-	add_filter( 'barista_commands_collection', __NAMESPACE__ . '\\add', 200, 1 );
-}
+add_action( 'barista_before_outputs_settings_data', __NAMESPACE__ . '\\add' );
 
 /**
  * Adds commands to collection.
- *
- * @param array $collection Commands collection.
  */
-function add( array $collection ): array {
+function add() {
 	global $menu;
+
+	$collection = [];
 
 	$icon_type = '';
 	$icon      = '';
 
 	if ( $menu && is_array( $menu ) ) {
-		$index = array_search( 'woocommerce', array_column( $menu, 2 ) );
-		if ( $index !== false ) {
+		$index = array_search( 'woocommerce', array_column( $menu, 2 ), true );
+		if ( false !== $index ) {
 			$woocommerce_menu = $menu[ $index ];
 			$icon             = $woocommerce_menu[6];
 			$icon_type        = 'background';
@@ -73,5 +67,5 @@ function add( array $collection ): array {
 		}
 	}
 
-	return $collection;
+	Collection::get_instance()->add_command( $collection );
 }

@@ -9,28 +9,23 @@ declare(strict_types=1);
 
 namespace Barista\Actions\post;
 
-add_action( 'barista_init_commands', __NAMESPACE__ . '\\init_actions' );
+use Barista\Collection;
 
-/**
- * Init hooks.
- */
-function init_actions() {
-	add_filter( 'barista_commands_collection', __NAMESPACE__ . '\\add', 200, 1 );
-}
+add_action( 'barista_init_commands', __NAMESPACE__ . '\\add', 200 );
 
 /**
  * Adds commands to collection.
- *
- * @param array $collection Commands collection.
  */
-function add( array $collection ): array {
+function add() {
 	global $pagenow, $post;
 
 	if ( ! $post ) {
-		return $collection;
+		return;
 	}
 
 	$post_type_object = get_post_type_object( $post->post_type );
+
+	$collection = [];
 
 	if ( is_singular() ) {
 		$collection[] = [
@@ -55,5 +50,6 @@ function add( array $collection ): array {
 			'position' => 10,
 		];
 	}
-	return $collection;
+
+	Collection::get_instance()->add_command( $collection );
 }

@@ -51,7 +51,7 @@ function ajax_remote_command() {
 	if ( 'execute' === $sub_action ) {
 		do_action( 'barista_command_' . $server_id, $data );
 	} elseif ( 'save_value' === $sub_action ) {
-		$collection = apply_filters( 'barista_commands_collection', [] );
+		$collection = Collection::get_instance()->get_items();
 		$index      = array_search( $server_id, array_column( $collection, 'id' ), true );
 
 		if ( $index < 0 ) {

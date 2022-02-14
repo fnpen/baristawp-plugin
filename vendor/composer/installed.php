@@ -1,7 +1,7 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '0.4.0',
-        'version' => '0.4.0.0',
+        'pretty_version' => '0.0.0',
+        'version' => '0.0.0.0',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,8 +11,8 @@
     ),
     'versions' => array(
         'fnpen/barista' => array(
-            'pretty_version' => '0.4.0',
-            'version' => '0.4.0.0',
+            'pretty_version' => '0.0.0',
+            'version' => '0.0.0.0',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

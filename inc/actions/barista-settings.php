@@ -9,25 +9,27 @@ declare(strict_types=1);
 
 namespace Barista\Actions\barista_settings;
 
+use Barista\Collection;
 use stdClass;
 
-add_action( 'barista_init_commands', __NAMESPACE__ . '\\init_actions' );
+add_action( 'barista_init_commands', __NAMESPACE__ . '\\init_actions', 200 );
 add_action( 'barista_save_value_settings', __NAMESPACE__ . '\\save', 100, 2 );
 
 /**
  * Init hooks.
  */
 function init_actions() {
-	add_filter( 'barista_commands_collection', __NAMESPACE__ . '\\add', 200, 1 );
+	add();
+
 	add_filter( 'barista_command_barista_settings_reset', __NAMESPACE__ . '\\reset', 200, 1 );
 }
 
 /**
  * Adds commands to collection.
- *
- * @param array $collection Commands collection.
  */
-function add( array $collection ): array {
+function add() {
+	$collection = [];
+
 	$collection[] = [
 		'group'             => __( 'Features', 'barista' ),
 		'position'          => BARISTA_COMMAND_PRIORITY_FEATURES + 500,
@@ -92,7 +94,7 @@ function add( array $collection ): array {
 		'confirmation' => __( 'Do you really want to reset all settings?', 'barista' ),
 	];
 
-	return $collection;
+	Collection::get_instance()->add_command( $collection );
 }
 
 /**

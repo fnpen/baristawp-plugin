@@ -7,36 +7,28 @@
 
 namespace Barista\Actions\admin_menu;
 
-add_action( 'barista_init_commands', __NAMESPACE__ . '\\init_actions' );
+use Barista\Collection;
+
+add_action( 'barista_init_commands', __NAMESPACE__ . '\\add' );
 
 const COMMAND_NAME = 'menu_items';
 
 /**
- * Init hooks.
- */
-function init_actions() {
-	add_filter( 'barista_commands_collection', __NAMESPACE__ . '\\add', 100, 1 );
-}
-
-/**
  * Adds commands to collection.
- *
- * @param array $collection Commands collection.
  */
-function add( array $collection ): array {
-	global $menu, $submenu;
+function add() {
+	Collection::get_instance()->add_command(
+		[
+			'id'                => COMMAND_NAME,
+			'group'             => 'WordPress Dashboard',
+			'title'             => __( 'Menu', 'barista' ),
+			'filterPlaceholder' => __( 'Search for menu items', 'barista' ),
+			'icon'              => 'dashicons-dashboard',
+			'position'          => BARISTA_COMMAND_PRIORITY_WP_DASHBOARD,
+		]
+	);
 
-	$collection[] = [
-		'id'                => COMMAND_NAME,
-		'group'             => 'WordPress Dashboard',
-		'title'             => __( 'Menu', 'barista' ),
-		'filterPlaceholder' => __( 'Search for menu items', 'barista' ),
-		'icon'              => 'dashicons-dashboard',
-		'position'          => BARISTA_COMMAND_PRIORITY_WP_DASHBOARD,
-	];
-
-	$collection = array_merge( $collection, wp_menu_to_collection( $menu, $submenu ) );
-	return $collection;
+	wp_menu_to_collection();
 }
 
 /**
@@ -53,12 +45,10 @@ function strip_tags_content( string $text ) :string {
 
 /**
  * Transform menu array to commands…
- *
- * @param array $menu    Menu array.
- * @param array $submenu Sub menu array.
- * @return array
  */
-function wp_menu_to_collection( $menu, $submenu ) {
+function wp_menu_to_collection() {
+	global $menu, $submenu;
+
 	$collection = [];
 
 	foreach ( $menu as $position => $menu_item ) {
@@ -70,9 +60,6 @@ function wp_menu_to_collection( $menu, $submenu ) {
 		$icon_type = '';
 		$icon      = '';
 
-		// $img       = '';
-		// $img_style = '';
-		// $img_class = ' dashicons-before';
 		/*
 		 * If the string 'none' (previously 'div') is passed instead of a URL, don't output
 		 * the default menu image so an icon can be added to div.wp-menu-image as background
@@ -82,23 +69,15 @@ function wp_menu_to_collection( $menu, $submenu ) {
 		if ( ! empty( $menu_item[6] ) ) {
 			$icon_type = 'url';
 			$icon      = $menu_item[6];
-			// $img = '<img src="' . $item[6] . '" alt="" />';
 
 			if ( 'none' === $menu_item[6] || 'div' === $menu_item[6] ) {
 				$icon_type = 'none';
-				// $img = '<br />';
 			} elseif ( 0 === strpos( $menu_item[6], 'data:image/svg+xml;base64,' ) ) {
 				$icon_type = 'background';
 				$icon      = $menu_item[6];
-
-				// $img       = '<br />';
-				// $img_style = ' style="background-image:url(\'' . esc_attr( $item[6] ) . '\')"';
-				// $img_class = ' svg';
 			} elseif ( 0 === strpos( $menu_item[6], 'dashicons-' ) ) {
 				$icon_type = 'className';
 				$icon      = ' dashicons-before ' . sanitize_html_class( $menu_item[6] );
-				// $img       = '<br />';
-				// $img_class = ' dashicons-before ' . sanitize_html_class( $item[6] );
 			}
 		}
 
@@ -210,5 +189,5 @@ function wp_menu_to_collection( $menu, $submenu ) {
 		}
 	}
 
-	return $collection;
+	Collection::get_instance()->add_command( $collection );
 }

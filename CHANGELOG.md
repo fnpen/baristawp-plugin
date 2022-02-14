@@ -1,16 +1,157 @@
-# Changelog
+# Changelog:
 
-## [0.4.2] - Fix
+All notable changes to this project will be documented in this file.
 
-- Updating fix
+### 0.6.37 (2022-02-14)
 
-## [0.4.1] - Fix
 
-- Updating fix
+##### Bug Fixes
 
-## [0.4.0] - Initial public version
+* WooCommerce sett page does not show fields. — Reafctored methods and moved registration to the footer.
 
-- WooCommerce Settings sections added with third party plugins support.
-- Added automatic updating.
+### 0.6.36 (2022-02-13)
 
-## [0.3.0] - Previous version
+
+##### Build System
+
+* Add name for artifact
+
+### 0.6.35 (2022-02-13)
+
+
+##### Build System
+
+* No cache
+
+### 0.6.34 (2022-02-13)
+
+### 0.6.33 (2022-02-13)
+
+
+##### Build System
+
+* Experiments with action cache
+
+### 0.6.32 (2022-02-13)
+
+
+##### Build System
+
+* Changelog desrease heading level
+
+### 0.6.31 (2022-02-13)
+
+### 0.6.30 (2022-02-13)
+
+
+### Build System
+
+* Remove unused
+
+### 0.6.29 (2022-02-13)
+
+
+### Build System
+
+* Add classes dir with .gitkeep
+
+### 0.6.28 (2022-02-13)
+
+
+### Build System
+
+* Experiments
+
+### 0.6.27 (2022-02-13)
+
+
+### Build System
+
+* Experiments
+
+### 0.6.26 (2022-02-13)
+
+
+### Build System
+
+* Experiments
+
+### 0.6.25 (2022-02-13)
+
+
+### Build System
+
+* Experiments
+
+### 0.6.24 (2022-02-13)
+
+
+### Build System
+
+* Experiments
+
+### 0.6.23 (2022-02-13)
+
+
+### Build System
+
+* Experiments
+
+### 0.6.22 (2022-02-13)
+
+
+### Build System
+
+* Improve action
+
+### 0.6.21 (2022-02-13)
+
+
+### Build System
+
+* Experiments with actions
+
+### 0.6.20 (2022-02-13)
+
+
+### Build System
+
+* Experiments with action
+
+### 0.6.19 (2022-02-13)
+
+
+### Build System
+
+* Bump to test
+
+### 0.6.18 (2022-02-13)
+
+
+### Build System
+
+* Improvement for GH action — Try to use ci instead of install with cache
+
+### 0.6.17 (2022-02-13)
+
+
+### Build System
+
+* Commit to show build type
+
+### 0.6.16 (2022-02-13)
+
+### 0.6.15 (2022-02-13)
+
+### 0.6.14 (2022-02-13)
+
+
+### Features
+
+* Remove unused package — test
+
+### 0.6.13 (2022-02-13)
+
+### 0.6.12 (2022-02-13)
+
+ssss

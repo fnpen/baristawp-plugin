@@ -9,39 +9,35 @@ declare(strict_types=1);
 
 namespace Barista\Actions\core;
 
-add_action( 'barista_init_commands', __NAMESPACE__ . '\\init_actions' );
+add_action( 'barista_init', __NAMESPACE__ . '\\init' );
 
 /**
- * Init core actions.
+ * Init core processors
  */
-function init_actions() {
-	add_filter( 'barista_commands_collection', __NAMESPACE__ . '\\fill_id_by_title', 20000, 1 );
-	add_filter( 'barista_commands_collection', __NAMESPACE__ . '\\add_nonces', 20010, 1 );
+function init() {
+	add_filter( 'barista_add_command', __NAMESPACE__ . '\\fill_id_by_title', 100, 1 );
+	add_filter( 'barista_add_command', __NAMESPACE__ . '\\add_nonces', 101, 1 );
 }
 
 /**
- * Assigns ids for commands without predefined ids.
+ * Assigns id for command without predefined id.
  *
- * @param array $collection Commands collection.
+ * @param array $command Command.
  */
-function fill_id_by_title( array $collection ): array {
-	foreach ( $collection as &$item ) {
-		if ( ! isset( $item['id'] ) ) {
-			$item['id'] = $item['title'];
-		}
+function fill_id_by_title( array $command ): array {
+	if ( ! isset( $command['id'] ) ) {
+		$command['id'] = $command['title'];
 	}
-	return $collection;
+	return $command;
 }
 
 /**
- * Adds nonces for all commands.
+ * Adds nonce for command.
  *
- * @param array $collection Commands collection.
+ * @param array $command Command.
  */
-function add_nonces( array $collection ): array {
-	foreach ( $collection as &$item ) {
-		$id            = $item['id'] ?? $item['title'];
-		$item['nonce'] = wp_create_nonce( 'barista_command_' . $id . '_' . $item['title'] );
-	}
-	return $collection;
+function add_nonces( array $command ): array {
+	$id               = $command['id'] ?? $command['title'];
+	$command['nonce'] = wp_create_nonce( 'barista_command_' . $id . '_' . $command['title'] );
+	return $command;
 }

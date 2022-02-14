@@ -11,8 +11,8 @@ namespace Barista;
 
 use Puc_v4_Factory;
 
-if( 'VERSION_DEV' !== BARISTA_VERSION ) {
-	$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+if ( ! BARISTA_DEVELOPMENT ) {
+	Puc_v4_Factory::buildUpdateChecker(
 		'https://github.com/fnpen/baristawp-plugin/',
 		BARISTA_PLUGIN_FILE,
 		'barista',

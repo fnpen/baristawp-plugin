@@ -30,7 +30,7 @@ function get_admin_menus() { // phpcs:ignore Generic.Metrics.CyclomaticComplexit
 		require ABSPATH . 'wp-admin/menu.php';
 	}
 
-	$collection = apply_filters( 'barista_commands_collection', [] );
+	$collection = Collection::get_instance()->get_items();
 
 	wp_send_json_success( $collection );
 }

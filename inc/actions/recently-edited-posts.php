@@ -9,24 +9,18 @@
 
 namespace Barista\Actions\recently_edited_posts;
 
+use Barista\Collection;
+
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\on_edit_open' );
-add_action( 'barista_init_commands', __NAMESPACE__ . '\\init_actions' );
+add_action( 'barista_init_commands', __NAMESPACE__ . '\\add', 200 );
 
 const COMMAND_NAME = 'last_edited_posts';
 
 /**
- * Init hooks.
- */
-function init_actions() {
-	add_filter( 'barista_commands_collection', __NAMESPACE__ . '\\add', 200, 1 );
-}
-
-/**
  * Adds commands to collection.
- *
- * @param array $collection Commands collection.
  */
-function add( array $collection ): array {
+function add() {
+	$collection   = [];
 	$collection[] = [
 		'id'       => COMMAND_NAME,
 		'title'    => __( 'Recently Edited Posts', 'barista' ),
@@ -48,9 +42,9 @@ function add( array $collection ): array {
 	);
 
 	foreach ( $ids as $recent_post_id ) {
-		$index = array_search( $recent_post_id, array_column( $posts, 'ID' ) );
+		$index = array_search( $recent_post_id, array_column( $posts, 'ID' ), true );
 
-		if ( $index === false ) {
+		if ( false === $index ) {
 			continue;
 		}
 
@@ -67,13 +61,12 @@ function add( array $collection ): array {
 			'suffix'   => $edit_post_label,
 			'icon'     => $post_type ? $post_type->menu_icon : false,
 			'href'     => get_edit_post_link( $recent_post, 'raw' ),
-			// 'href'             => get_post_permalink($recent_post),
 			'inSearch' => false,
 			'position' => BARISTA_COMMAND_PRIORITY_FEATURES,
 		];
 	}
 
-	return $collection;
+	Collection::get_instance()->add_command( $collection );
 }
 
 
@@ -86,7 +79,11 @@ function get_recently_edited_post_ids() {
 	return ! is_array( $ids ) ? [] : $ids;
 }
 
-
+/**
+ * Adds id of opened post.
+ *
+ * @return void
+ */
 function on_edit_open() {
 	global $post;
 
