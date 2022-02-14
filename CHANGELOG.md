@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+### 0.6.38 (2022-02-14)
+
+
+##### Features
+
+* Allow to add command with uxType using class
+* Optimized Recently visited
+
+
+##### Bug Fixes
+
+* Detect that WooCommerce is activated
+
+
+##### Code Refactoring
+
+* Added settings class and singleton for collection.
+* Initialize commands from special file
+
 ### 0.6.37 (2022-02-14)
 
 

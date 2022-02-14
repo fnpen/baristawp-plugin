@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Barista;
 
 use Barista\Collection;
-use function Barista\Actions\barista_settings\get_barista_settings;
+use Barista\Settings;
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\scripts', 1000 );
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\scripts', 6000 );
@@ -77,7 +77,7 @@ function footer() {
 			'ajaxUrl'    => admin_url( 'admin-ajax.php' ),
 			'collection' => Collection::get_instance()->get_items(),
 			'isAdmin'    => is_admin(),
-			'settings'   => get_barista_settings(),
+			'settings'   => Settings::get_instance()->get_all(),
 		]
 	);
 }

@@ -7,12 +7,13 @@
 
 declare(strict_types=1);
 
-namespace Barista\Actions\woocommerce;
+namespace Barista\Commands\woocommerce;
 
 use Barista\Collection;
-use WC_Admin_Settings;
 
-add_action( 'barista_before_outputs_settings_data', __NAMESPACE__ . '\\add' );
+if ( class_exists( '\WooCommerce', false ) ) {
+	add_action( 'barista_before_outputs_settings_data', __NAMESPACE__ . '\\add' );
+}
 
 /**
  * Adds commands to collection.
@@ -46,7 +47,7 @@ function add() {
 		'iconType' => $icon_type,
 	];
 
-	$settings = WC_Admin_Settings::get_settings_pages();
+	$settings = \WC_Admin_Settings::get_settings_pages();
 
 	foreach ( $settings as $setting ) {
 		$setting_id    = $setting->get_id();

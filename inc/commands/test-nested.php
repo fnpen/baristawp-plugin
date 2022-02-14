@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Barista\Actions\test_nested;
+namespace Barista\Commands\test_nested;
 
 use Barista\Collection;
 

@@ -7,9 +7,10 @@
 
 	declare(strict_types=1);
 
-namespace Barista\Actions\recently_edited_posts;
+namespace Barista\Commands\recently_edited_posts;
 
 use Barista\Collection;
+use Barista\Recently_Edited_Posts;
 
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\on_edit_open' );
 add_action( 'barista_init_commands', __NAMESPACE__ . '\\add', 200 );
@@ -29,7 +30,7 @@ function add() {
 		'position' => BARISTA_COMMAND_PRIORITY_FEATURES,
 	];
 
-	$ids = get_recently_edited_post_ids();
+	$ids = Recently_Edited_Posts::get_instance()->get_all();
 
 	$posts = get_posts(
 		[
@@ -69,16 +70,6 @@ function add() {
 	Collection::get_instance()->add_command( $collection );
 }
 
-
-/**
- * Reads recent posts.
- */
-function get_recently_edited_post_ids() {
-	$ids = array_unique( get_option( 'barista_recently_edited_posts', [] ) );
-
-	return ! is_array( $ids ) ? [] : $ids;
-}
-
 /**
  * Adds id of opened post.
  *
@@ -90,11 +81,6 @@ function on_edit_open() {
 	$current_screen = get_current_screen();
 
 	if ( $current_screen && 'post' === $current_screen->base && $post && 'auto-draft' !== $post->status && $post->ID > 0 ) {
-		$ids = get_recently_edited_post_ids();
-		array_unshift( $ids, $post->ID );
-		$ids = array_unique( $ids );
-		$ids = array_slice( $ids, 0, 100 );
-
-		update_option( 'barista_recently_edited_posts', $ids );
+		Recently_Edited_Posts::get_instance()->add_post( (int) $post->ID );
 	}
 }

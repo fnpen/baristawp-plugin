@@ -7,17 +7,10 @@
 
 declare(strict_types=1);
 
-namespace Barista\Actions\core;
+namespace Barista\Commands\core;
 
-add_action( 'barista_init', __NAMESPACE__ . '\\init' );
-
-/**
- * Init core processors
- */
-function init() {
-	add_filter( 'barista_add_command', __NAMESPACE__ . '\\fill_id_by_title', 100, 1 );
-	add_filter( 'barista_add_command', __NAMESPACE__ . '\\add_nonces', 101, 1 );
-}
+add_filter( 'barista_add_command', __NAMESPACE__ . '\\fill_id_by_title', 100, 1 );
+add_filter( 'barista_add_command', __NAMESPACE__ . '\\add_nonces', 101, 1 );
 
 /**
  * Assigns id for command without predefined id.

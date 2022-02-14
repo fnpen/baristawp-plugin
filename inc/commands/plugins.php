@@ -7,7 +7,7 @@
 
 	declare(strict_types=1);
 
-namespace Barista\Actions\plugins;
+namespace Barista\Commands\plugins;
 
 use Barista\Collection;
 

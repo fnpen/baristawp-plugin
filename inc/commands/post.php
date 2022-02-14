@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Barista\Actions\post;
+namespace Barista\Commands\post;
 
 use Barista\Collection;
 

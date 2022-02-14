@@ -7,16 +7,16 @@
 
 declare(strict_types=1);
 
-namespace Barista\Actions\flush_rewrite_rules;
+namespace Barista\Commands\flush_rewrite_rules;
 
 use Barista\Collection;
 
-add_action( 'barista_init_commands', __NAMESPACE__ . '\\init_actions' );
+add_action( 'barista_init_commands', __NAMESPACE__ . '\\commands' );
 
 /**
  * Init hooks.
  */
-function init_actions() {
+function commands() {
 	add();
 	add_filter( 'barista_command_flush_rewrite_rules_soft', __NAMESPACE__ . '\\run_soft', 200, 1 );
 	add_filter( 'barista_command_flush_rewrite_rules_hard', __NAMESPACE__ . '\\run_hard', 200, 1 );

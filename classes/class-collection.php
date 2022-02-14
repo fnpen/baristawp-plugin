@@ -12,27 +12,7 @@ namespace Barista;
 /**
  * Collection class.
  */
-class Collection {
-	/**
-	 * Singleton variable.
-	 *
-	 * @var Collection
-	 */
-	private static $instance;
-
-	/**
-	 * Method to get the instance.
-	 *
-	 * @return Collection
-	 */
-	public static function get_instance() {
-		if ( ! isset( self::$instance ) ) {
-			self::$instance = new Collection();
-		}
-
-		return self::$instance;
-	}
-
+class Collection extends Singleton {
 	/**
 	 * All registered commands.
 	 *
@@ -55,7 +35,7 @@ class Collection {
 	 * @param array $command Command to add.
 	 */
 	public function add_command( $command ) {
-		if ( ! isset( $command['id'] ) && ! isset( $command['title'] ) ) {
+		if ( ! isset( $command['id'] ) && ! isset( $command['title'] ) && ! isset( $command['uxType'] ) ) {
 			array_map( [ $this, 'add_command' ], $command );
 			return;
 		}

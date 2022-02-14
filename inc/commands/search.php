@@ -7,7 +7,7 @@
 
 	declare(strict_types=1);
 
-namespace Barista\Actions\search;
+namespace Barista\Commands\search;
 
 use Barista\Collection;
 

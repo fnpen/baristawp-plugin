@@ -7,18 +7,19 @@
 
 declare(strict_types=1);
 
-namespace Barista\Actions\barista_settings;
+namespace Barista\Commands\barista_settings;
 
 use Barista\Collection;
+use Barista\Settings;
 use stdClass;
 
-add_action( 'barista_init_commands', __NAMESPACE__ . '\\init_actions', 200 );
+add_action( 'barista_init_commands', __NAMESPACE__ . '\\commands', 200 );
 add_action( 'barista_save_value_settings', __NAMESPACE__ . '\\save', 100, 2 );
 
 /**
  * Init hooks.
  */
-function init_actions() {
+function commands() {
 	add();
 
 	add_filter( 'barista_command_barista_settings_reset', __NAMESPACE__ . '\\reset', 200, 1 );
@@ -106,14 +107,13 @@ function add() {
 function save( array $command, \stdClass $data ) {
 	$dirty_value = $data->body['dirtyValue'];
 
-	$settings                               = get_barista_settings();
-	$settings[ $command['valueSourceKey'] ] = $dirty_value;
+	$settings = Settings::get_instance();
 
-	update_option( 'barista_settings', (array) $settings );
+	$settings->update( $command['valueSourceKey'], $dirty_value );
 
 	wp_send_json_success(
 		[
-			'baristaSettings' => $settings,
+			'baristaSettings' => $settings->get_all(),
 			'notification'    => [
 				'text' => __( 'Settings were saved successfully.', 'barista' ),
 			],
@@ -122,19 +122,10 @@ function save( array $command, \stdClass $data ) {
 }
 
 /**
- * Reads plugin settings.
- */
-function get_barista_settings() {
-	$settings = get_option( 'barista_settings' ) ?? [];
-
-	return $settings;
-}
-
-/**
  * Command to reset saved settings.
  */
 function reset() {
-	update_option( 'barista_settings', [] );
+	Settings::get_instance()->reset();
 
 	wp_send_json_success(
 		[

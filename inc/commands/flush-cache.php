@@ -7,18 +7,18 @@
 
 declare(strict_types=1);
 
-namespace Barista\Actions\flush_cache;
+namespace Barista\Commands\flush_cache;
 
 use Barista\Collection;
 
-add_action( 'barista_init_commands', __NAMESPACE__ . '\\init_actions' );
+add_action( 'barista_init_commands', __NAMESPACE__ . '\\commands' );
 
 const COMMAND_NAME = 'flush_cache';
 
 /**
  * Init hooks.
  */
-function init_actions() {
+function commands() {
 	add();
 	add_filter( 'barista_command_' . COMMAND_NAME, __NAMESPACE__ . '\\run', 200, 1 );
 }

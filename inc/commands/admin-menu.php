@@ -5,7 +5,7 @@
  * @package barista
  */
 
-namespace Barista\Actions\admin_menu;
+namespace Barista\Commands\admin_menu;
 
 use Barista\Collection;
 
