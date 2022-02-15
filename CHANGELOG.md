@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.7.0 (2022-02-15)
+
+
+##### Features
+
+* Bookmarks - adding, removing
+
+
+##### Code Refactoring
+
+* Init to bootstrap
+
 ### 0.6.39 (2022-02-15)
 
 

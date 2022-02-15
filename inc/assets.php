@@ -11,6 +11,7 @@ namespace Barista;
 
 use Barista\Collection;
 use Barista\Settings;
+use Barista\Bookmarks;
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\scripts', 1000 );
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\scripts', 6000 );

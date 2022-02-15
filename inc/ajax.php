@@ -33,6 +33,8 @@ function check_init_ajax_for_item() {
 		wp_send_json_error( __( 'Invalid nonce', 'barista' ), 400 );
 	}
 
+	do_action( 'barista_ajax_request' );
+
 	return (object) [
 		'command' => $command,
 		'body'    => $body,
@@ -45,11 +47,12 @@ function check_init_ajax_for_item() {
 function ajax_remote_command() {
 	$data = check_init_ajax_for_item();
 
-	$sub_action = isset( $_REQUEST['subAction'] ) ? sanitize_key( wp_unslash( $_REQUEST['subAction'] ) ) : 'execute'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$sub_action = isset( $_REQUEST['subAction'] ) ? sanitize_key( wp_unslash( $_REQUEST['subAction'] ) ) : 'enter'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$server_id  = sanitize_text_field( $data->command['serverId'] );
 
-	if ( 'execute' === $sub_action ) {
+	if ( 'enter' === $sub_action ) {
 		do_action( 'barista_command_' . $server_id, $data );
+		do_action( 'barista_command', $data );
 	} elseif ( 'save_value' === $sub_action ) {
 		$collection = Collection::get_instance()->get_items();
 		$index      = array_search( $server_id, array_column( $collection, 'id' ), true );
@@ -67,6 +70,9 @@ function ajax_remote_command() {
 		if ( 'barista_settings' === $command['valueSource'] ) {
 			do_action( 'barista_save_value_settings', $command, $data );
 		}
+	} else {
+		do_action( 'barista_command_' . $server_id . '_' . $sub_action, $data );
+		do_action( 'barista_action_' . $sub_action, $data );
 	}
 
 	wp_send_json_error( __( 'Not processed, please add command action.', 'barista' ) );
