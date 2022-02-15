@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### 0.6.39 (2022-02-15)
+
+
+##### Bug Fixes
+
+* Temporary disable on front-end — Until lazy-loading will be implemented.
+
 ### 0.6.38 (2022-02-14)
 
 
