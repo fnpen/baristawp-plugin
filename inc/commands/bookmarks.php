@@ -83,6 +83,12 @@ function commands() {
 			'title'    => __( 'Bookmarks', 'barista' ),
 			'icon'     => 'dashicons-star-filled',
 			'group'    => __( 'Features', 'barista' ),
+			'actions'          => [
+				[
+					'name'        => 'enter',
+					'setAsParent' => true,
+				],
+			],
 			'position' => BARISTA_COMMAND_PRIORITY_FEATURES,
 		]
 	);
@@ -101,29 +107,40 @@ function commands() {
 function bookmarks_to_commands( array $bookmarks ) {
 	$collection = new Collection();
 
-	foreach ( $bookmarks as $bookmark ) {
-		$group = timestamp_to_day_human( $bookmark['time'] );
+	if( count($bookmarks) ) {
+		foreach ( $bookmarks as $bookmark ) {
+			$group = timestamp_to_day_human( $bookmark['time'] );
 
+			$collection->add_command(
+				[
+					'parent'           => 'bookmarks',
+					'id'               => $bookmark['id'],
+					'title'            => $bookmark['title'],
+					'group'            => $group,
+					'iconRemoveAction' => 'remove_from_bookmarks',
+					'defaultAction'    => 'location',
+					'actions'          => [
+						[
+							'name'  => 'location',
+							'title' => __( 'Go to', 'barista' ),
+							'href'  => $bookmark['url'],
+						],
+						[
+							'name'  => 'remove_from_bookmarks',
+							'title' => __( 'Remove from Bookmarks', 'barista' ),
+						],
+					],
+					'icon'             => 'dashicons-star-filled',
+				]
+			);
+		}
+	} else {
 		$collection->add_command(
 			[
-				'parent'           => 'bookmarks',
-				'id'               => $bookmark['id'],
-				'title'            => $bookmark['title'],
-				'group'            => $group,
-				'iconRemoveAction' => 'remove_from_bookmarks',
-				'defaultAction'    => 'location',
-				'actions'          => [
-					[
-						'name'  => 'location',
-						'title' => __( 'Go to', 'barista' ),
-						'href'  => $bookmark['url'],
-					],
-					[
-						'name'  => 'remove_from_bookmarks',
-						'title' => __( 'Remove from Bookmarks', 'barista' ),
-					],
-				],
-				'icon'             => 'dashicons-star-filled',
+				'parent'     => 'bookmarks',
+				'selectable' => false,
+				'inSearch'   => false,
+				'title'      => 'Empty',
 			]
 		);
 	}
@@ -161,10 +178,9 @@ function add_to_bookmarks( \Barista\Ajax\Action_Response $response, \Barista\Aja
 				'text'  => $title,
 			]
 		)
-		->data(
-			[
-				'bookmarks' => bookmarks_to_commands( $bookmarks->get_all() ),
-			]
+		->replace(
+			'bookmarks', false,
+			bookmarks_to_commands( $bookmarks->get_all() )
 		);
 }
 
@@ -186,6 +202,7 @@ function remove_url_from_bookmarks( \Barista\Ajax\Action_Response $response, \Ba
 
 	if ( $result ) {
 		return $response->success( $result_text )->replace(
+			'bookmarks', false,
 			bookmarks_to_commands( $bookmarks->get_all() )
 		);
 	}
@@ -209,6 +226,7 @@ function remove_item_from_bookmarks( \Barista\Ajax\Action_Response $response, \B
 
 	if ( $result ) {
 		return $response->success( $result_text )->replace(
+			'bookmarks', false,
 			bookmarks_to_commands( $bookmarks->get_all() )
 		);
 	}

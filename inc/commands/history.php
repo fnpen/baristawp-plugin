@@ -95,7 +95,7 @@ function return_list( \Barista\Ajax\Action_Response $response ) {
 
 	add_common( $collection );
 
-	return $response->replace( $collection );
+	return $response->replace( 'history', false, $collection );
 }
 
 /**

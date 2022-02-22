@@ -74,39 +74,7 @@ function load_children( \Barista\Ajax\Action_Response $response ) {
 				'pluginFile'  => $plugin_file,
 			]
 		);
-
-		// $collection[] = [
-		// 'parent'     => $id,
-		// 'id'         => $id . '-activate',
-		// 'title'      => 'Activate',
-		// 'icon'       => 'dashicons-admin-plugins',
-		// 'pluginFile' => $plugin_file,
-		// ];
-
-		// $collection[] = [
-		// 'parent'     => $id,
-		// 'id'         => $id . '-Deactivate',
-		// 'title'      => 'Deactivate',
-		// 'icon'       => 'dashicons-admin-plugins',
-		// 'pluginFile' => $plugin_file,
-		// ];
-
-		// $collection[] = [
-		// 'parent'     => $id,
-		// 'id'         => $id . '-Update',
-		// 'title'      => 'Update',
-		// 'icon'       => 'dashicons-admin-plugins',
-		// 'pluginFile' => $plugin_file,
-		// ];
-
-		// $collection[] = [
-		// 'parent'     => $id,
-		// 'id'         => $id . '-Delete',
-		// 'title'      => 'Delete',
-		// 'icon'       => 'dashicons-admin-plugins',
-		// 'pluginFile' => $plugin_file,
-		// ];
 	}
 
-	return $response->replace( $collection );
+	return $response->replace( COMMAND_NAME, false, $collection );
 }

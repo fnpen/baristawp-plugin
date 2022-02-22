@@ -182,7 +182,7 @@ if ( ! class_exists( __NAMESPACE__ . '\\Action_Response' ) ) {
 		 * @param array|Collection $data Data.
 		 * @return $this
 		 */
-		public function replace( $data, $group = false ) {
+		public function replace( $parent, $group, $data) {
 			$this->touched = true;
 
 			if ( $data instanceof Collection ) {
@@ -194,6 +194,7 @@ if ( ! class_exists( __NAMESPACE__ . '\\Action_Response' ) ) {
 			}
 
 			$this->data['replaceCommandsInParent'][] = [
+				'parent'    => $parent,
 				'group'    => $group,
 				'commands' => $data,
 			];

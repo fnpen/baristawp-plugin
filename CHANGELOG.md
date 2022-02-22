@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### 0.8.14 (2022-02-22)
+
+
+##### Bug Fixes
+
+* Fix issues with failing window
+
 ### 0.8.13 (2022-02-22)
 
 
