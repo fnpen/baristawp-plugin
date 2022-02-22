@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### 0.8.9 (2022-02-22)
+
+
+##### Features
+
+* Body scroll lock
+
 ### 0.8.8 (2022-02-22)
 
 
