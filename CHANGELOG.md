@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+### 0.8.2 (2022-02-22)
+
 ### 0.8.1 (2022-02-22)
 
 ## 0.8.0 (2022-02-22)
