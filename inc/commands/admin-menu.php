@@ -47,23 +47,6 @@ function strip_tags_content( string $text ) :string {
  * Transform menu array to commands…
  */
 function wp_menu_to_collection() {
-	if ( is_ajax() ) {
-		if ( ! defined( 'WP_NETWORK_ADMIN' ) ) {
-			define( 'WP_NETWORK_ADMIN', false );
-		}
-		if ( ! defined( 'WP_USER_ADMIN' ) ) {
-			define( 'WP_USER_ADMIN', false );
-		}
-
-		if ( \WP_NETWORK_ADMIN ) {
-			require_once ABSPATH . 'wp-admin/network/menu.php';
-		} elseif ( \WP_USER_ADMIN ) {
-			require_once ABSPATH . 'wp-admin/user/menu.php';
-		} else {
-			require_once ABSPATH . 'wp-admin/menu.php';
-		}
-	}
-
 	global $menu, $submenu;
 
 	$collection = [];

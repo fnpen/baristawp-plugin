@@ -63,6 +63,8 @@ function process_hooks( array $actions, Action_Response $response, Action_Reques
 	}
 }
 
+
+
 /**
  * Handle command remote action.
  */

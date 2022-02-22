@@ -43,6 +43,25 @@ function init() {
  * Init all hooks.
  */
 function admin_init() {
+	global $menu, $menu_order, $default_menu_order, $_wp_menu_nopriv, $_wp_submenu_nopriv; // it's important for including.
+
+	if ( is_ajax() && 'barista_run_action' === $_REQUEST['action'] ) {
+		if ( ! defined( 'WP_NETWORK_ADMIN' ) ) {
+			define( 'WP_NETWORK_ADMIN', false );
+		}
+		if ( ! defined( 'WP_USER_ADMIN' ) ) {
+			define( 'WP_USER_ADMIN', false );
+		}
+
+		if ( \WP_NETWORK_ADMIN ) {
+			require_once ABSPATH . 'wp-admin/network/menu.php';
+		} elseif ( \WP_USER_ADMIN ) {
+			require_once ABSPATH . 'wp-admin/user/menu.php';
+		} else {
+			require_once ABSPATH . 'wp-admin/menu.php';
+		}
+	}
+
 	do_action( 'barista_init' );
 	do_action( 'barista_init_commands' );
 }

@@ -3,7 +3,7 @@
   "description": "",
   "type": "wordpress-plugin",
   "license": "ISC",
-  "version": "0.8.10",
+  "version": "0.8.11",
   "require": {
     "php": ">=7.1"
   }
