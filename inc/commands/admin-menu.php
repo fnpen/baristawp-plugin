@@ -19,12 +19,12 @@ const COMMAND_NAME = 'menu_items';
 function add() {
 	Collection::get_instance()->add_command(
 		[
-			'id'                => COMMAND_NAME,
-			'group'             => 'WordPress Dashboard',
-			'title'             => __( 'Menu', 'barista' ),
-			'filterPlaceholder' => __( 'Search for menu items', 'barista' ),
-			'icon'              => 'dashicons-dashboard',
-			'position'          => BARISTA_COMMAND_PRIORITY_WP_DASHBOARD,
+			'id'               => COMMAND_NAME,
+			'group'            => 'WordPress Dashboard',
+			'title'            => __( 'Menu', 'barista' ),
+			'queryPlaceholder' => __( 'Search for menu items', 'barista' ),
+			'icon'             => 'dashicons-dashboard',
+			'position'         => BARISTA_COMMAND_PRIORITY_WP_DASHBOARD,
 		]
 	);
 
@@ -47,6 +47,23 @@ function strip_tags_content( string $text ) :string {
  * Transform menu array to commands…
  */
 function wp_menu_to_collection() {
+	if ( is_ajax() ) {
+		if ( ! defined( 'WP_NETWORK_ADMIN' ) ) {
+			define( 'WP_NETWORK_ADMIN', false );
+		}
+		if ( ! defined( 'WP_USER_ADMIN' ) ) {
+			define( 'WP_USER_ADMIN', false );
+		}
+
+		if ( \WP_NETWORK_ADMIN ) {
+			require_once ABSPATH . 'wp-admin/network/menu.php';
+		} elseif ( \WP_USER_ADMIN ) {
+			require_once ABSPATH . 'wp-admin/user/menu.php';
+		} else {
+			require_once ABSPATH . 'wp-admin/menu.php';
+		}
+	}
+
 	global $menu, $submenu;
 
 	$collection = [];
@@ -112,12 +129,17 @@ function wp_menu_to_collection() {
 				'parent'   => COMMAND_NAME,
 				'id'       => $id,
 				'group'    => __( 'Menu Items', 'barista' ),
-				'suffix'   => __( 'Open Backend Page', 'barista' ),
+				'actions' => [
+					[
+						'title'   => __( 'Open Backend Page', 'barista' ),
+						'name' => 'location',
+						'href'     => htmlspecialchars_decode( $link ),
+					]
+				],
 				'title'    => strip_tags_content( $menu_item[0] ),
 				'iconType' => $icon_type,
 				'icon'     => $icon,
 				'position' => BARISTA_COMMAND_PRIORITY_WP_DASHBOARD + $position * 100,
-				'href'     => htmlspecialchars_decode( $link ),
 			]
 		);
 
@@ -178,7 +200,13 @@ function wp_menu_to_collection() {
 						'parent'   => COMMAND_NAME,
 						'title'    => strip_tags_content( implode( ' › ', [ $menu_array['title'], $sub_item[0] ] ) ),
 						'group'    => __( 'Menu Items', 'barista' ),
-						'suffix'   => __( 'Open Admin Page', 'barista' ),
+						'actions' => [
+							[
+								'title'   => __( 'Open Backend Page', 'barista' ),
+								'name' => 'location',
+								'href'     => htmlspecialchars_decode( $link ),
+							]
+						],
 						'iconType' => $menu_array['iconType'],
 						'icon'     => $menu_array['icon'],
 						'position' => BARISTA_COMMAND_PRIORITY_WP_DASHBOARD + $position * 100 + $sub_key,

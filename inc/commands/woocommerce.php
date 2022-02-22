@@ -12,7 +12,8 @@ namespace Barista\Commands\woocommerce;
 use Barista\Collection;
 
 if ( class_exists( '\WooCommerce', false ) ) {
-	add_action( 'barista_before_outputs_settings_data', __NAMESPACE__ . '\\add' );
+	add_action( 'barista_footer_commands', __NAMESPACE__ . '\\add' );
+	// add_action( 'barista_init_commands_frontend', __NAMESPACE__ . '\\add' );
 }
 
 /**
@@ -61,7 +62,13 @@ function add() {
 				'id'       => implode( '-', [ $root_id, $setting_id, $section_id ] ),
 				'title'    => implode( ' › ', [ $setting_label, $section_title ] ),
 				'position' => BARISTA_COMMAND_PRIORITY_WP_DASHBOARD,
-				'href'     => admin_url( 'admin.php?page=wc-settings&tab=' . $setting_id . '&section=' . sanitize_title( $section_id ) ),
+				'actions'          => [
+					[
+						'name'  => 'location',
+						'title' => __( 'Go to', 'barista' ),
+						'href'  => admin_url( 'admin.php?page=wc-settings&tab=' . $setting_id . '&section=' . sanitize_title( $section_id ) ),
+					],
+				],
 				'icon'     => $icon,
 				'iconType' => $icon_type,
 			];

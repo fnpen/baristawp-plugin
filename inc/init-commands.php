@@ -19,6 +19,7 @@ add_action( 'barista_init', __NAMESPACE__ . '\\init_commands', 100 );
 function init_commands() {
 	require BARISTA_PLUGIN_DIR . '/inc/commands/core.php';
 
+	require BARISTA_PLUGIN_DIR . '/inc/commands/home.php';
 	require BARISTA_PLUGIN_DIR . '/inc/commands/woocommerce.php';
 	require BARISTA_PLUGIN_DIR . '/inc/commands/barista-settings.php';
 	require BARISTA_PLUGIN_DIR . '/inc/commands/plugins.php';
@@ -27,6 +28,10 @@ function init_commands() {
 	require BARISTA_PLUGIN_DIR . '/inc/commands/flush-cache.php';
 	require BARISTA_PLUGIN_DIR . '/inc/commands/recently-edited-posts.php';
 	require BARISTA_PLUGIN_DIR . '/inc/commands/bookmarks.php';
+
+	if ( 'no' !== Settings::get_instance()->get( 'enableHistory' ) ) {
+		require BARISTA_PLUGIN_DIR . '/inc/commands/history.php';
+	}
 
 	if ( BARISTA_DEVELOPMENT ) {
 		include BARISTA_PLUGIN_DIR . '/inc/commands/test-nested.php';

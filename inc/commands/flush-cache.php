@@ -11,17 +11,10 @@ namespace Barista\Commands\flush_cache;
 
 use Barista\Collection;
 
-add_action( 'barista_init_commands', __NAMESPACE__ . '\\commands' );
-
 const COMMAND_NAME = 'flush_cache';
 
-/**
- * Init hooks.
- */
-function commands() {
-	add();
-	add_filter( 'barista_command_' . COMMAND_NAME, __NAMESPACE__ . '\\run', 200, 1 );
-}
+add_action( 'barista_init_commands', __NAMESPACE__ . '\\add' );
+add_filter( 'barista_command_' . COMMAND_NAME . '_' . 'flush', __NAMESPACE__ . '\\run', 200, 2 );
 
 /**
  * Adds commands to collection.
@@ -32,8 +25,10 @@ function add() {
 			'id'       => COMMAND_NAME,
 			'title'    => __( 'Flush Cache', 'barista' ),
 			'icon'     => 'dashicons-controls-play',
-			'type'     => 'remote',
 			'group'    => __( 'Actions', 'barista' ),
+			'actions'  => [
+				'name' => 'flush',
+			],
 			'position' => BARISTA_COMMAND_PRIORITY_ACTIONS,
 		]
 	);
@@ -41,17 +36,14 @@ function add() {
 
 /**
  * Command process method.
+ *
+ * @param \Barista\Ajax\Action_Response $response Response.
+ * @return Action_Response
  */
-function run() {
+function run( \Barista\Ajax\Action_Response $response ) {
 	if ( false === \wp_cache_flush() ) {
-		wp_send_json_error( __( 'The object cache could not be flushed.', 'barista' ) );
+		return $response->failure( __( 'The object cache could not be flushed.', 'barista' ) );
 	}
 
-	wp_send_json_success(
-		[
-			'notification' => [
-				'text' => __( 'All cache items were removed.', 'barista' ),
-			],
-		]
-	);
+	return $response->success( __( 'All cache items were removed.', 'barista' ) );
 }

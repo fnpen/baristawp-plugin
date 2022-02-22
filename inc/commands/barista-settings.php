@@ -11,19 +11,10 @@ namespace Barista\Commands\barista_settings;
 
 use Barista\Collection;
 use Barista\Settings;
-use stdClass;
 
-add_action( 'barista_init_commands', __NAMESPACE__ . '\\commands', 200 );
-add_action( 'barista_save_value_settings', __NAMESPACE__ . '\\save', 100, 2 );
-
-/**
- * Init hooks.
- */
-function commands() {
-	add();
-
-	add_filter( 'barista_command_barista_settings_reset', __NAMESPACE__ . '\\reset', 200, 1 );
-}
+add_action( 'barista_init_commands', __NAMESPACE__ . '\\add', 200 );
+add_filter( 'barista_save_value_barista_settings', __NAMESPACE__ . '\\save', 100, 2 );
+add_filter( 'barista_command_barista_settings_reset', __NAMESPACE__ . '\\reset', 200, 1 );
 
 /**
  * Adds commands to collection.
@@ -32,29 +23,30 @@ function add() {
 	$collection = [];
 
 	$collection[] = [
-		'group'             => __( 'Features', 'barista' ),
-		'position'          => BARISTA_COMMAND_PRIORITY_FEATURES + 500,
-		'id'                => 'barista-settings',
-		'title'             => __( 'Barista Settings', 'barista' ),
-		'titleShort'        => __( 'Settings', 'barista' ),
-		'description'       => __( 'All Plugin Settings', 'barista' ),
-		'filterPlaceholder' => __( 'Search for settings', 'barista' ),
-		'icon'              => 'dashicons-admin-generic',
+		'group'            => __( 'Features', 'barista' ),
+		'position'         => BARISTA_COMMAND_PRIORITY_FEATURES + 500,
+		'id'               => 'barista-settings',
+		'title'            => __( 'Barista Settings', 'barista' ),
+		'titleShort'       => __( 'Settings', 'barista' ),
+		'description'      => __( 'All Plugin Settings', 'barista' ),
+		'queryPlaceholder' => __( 'Search for settings', 'barista' ),
+		'icon'             => 'dashicons-admin-generic',
 	];
 
 	$collection[] = [
 		'parent'         => 'barista-settings',
-		'inSearch'       => false,
+		// 'inSearch'       => false,
 		'title'          => __( 'Number of recently used commands', 'barista' ),
 		'valueSource'    => 'barista_settings',
 		'valueSourceKey' => 'recentCommandsLimit',
 		'uxType'         => 'input',
 		'inputType'      => 'number',
+		'position'       => BARISTA_COMMAND_PRIORITY_FEATURES + 500,
 	];
 
 	$collection[] = [
 		'parent'         => 'barista-settings',
-		'inSearch'       => false,
+		// 'inSearch'       => false,
 		'title'          => __( 'Hide the window after running the server command', 'barista' ),
 		'valueSource'    => 'barista_settings',
 		'valueSourceKey' => 'hideAfterRunningCommand',
@@ -63,11 +55,12 @@ function add() {
 			'hide'      => __( 'Hide', 'barista' ),
 			'leaveOpen' => __( 'Leave Open', 'barista' ),
 		],
+		'position'       => BARISTA_COMMAND_PRIORITY_FEATURES + 500,
 	];
 
 	$collection[] = [
 		'parent'         => 'barista-settings',
-		'inSearch'       => false,
+		// 'inSearch'       => false,
 		'title'          => __( 'Include nested commands in the search', 'barista' ),
 		'valueSource'    => 'barista_settings',
 		'valueSourceKey' => 'includeNestedCommandsInSearch',
@@ -76,6 +69,21 @@ function add() {
 			'yes' => __( 'Yes', 'barista' ),
 			'no'  => __( 'No', 'barista' ),
 		],
+		'position'       => BARISTA_COMMAND_PRIORITY_FEATURES + 500,
+	];
+
+	$collection[] = [
+		'parent'         => 'barista-settings',
+		'inSearch'       => false,
+		'title'          => __( 'Enable History', 'barista' ),
+		'valueSource'    => 'barista_settings',
+		'valueSourceKey' => 'enableHistory',
+		'uxType'         => 'radio',
+		'options'        => [
+			'yes' => __( 'Yes', 'barista' ),
+			'no'  => __( 'No', 'barista' ),
+		],
+		'position'       => BARISTA_COMMAND_PRIORITY_FEATURES + 500,
 	];
 
 	$collection[] = [
@@ -83,6 +91,7 @@ function add() {
 		'inSearch'   => false,
 		'uxType'     => 'separator',
 		'selectable' => false,
+		'position'   => BARISTA_COMMAND_PRIORITY_FEATURES + 500,
 	];
 
 	$collection[] = [
@@ -93,6 +102,7 @@ function add() {
 		'type'         => 'remote',
 		'title'        => __( 'Reset All Barista Settings', 'barista' ),
 		'confirmation' => __( 'Do you really want to reset all settings?', 'barista' ),
+		'position'     => BARISTA_COMMAND_PRIORITY_FEATURES + 500,
 	];
 
 	Collection::get_instance()->add_command( $collection );
@@ -101,38 +111,34 @@ function add() {
 /**
  * Saves settings.
  *
- * @param array     $command Command.
- * @param \stdClass $data Request body data.
+ * @param \Barista\Ajax\Action_Response $response Response data.
+ * @param \Barista\Ajax\Action_Request  $request Request body data.
  */
-function save( array $command, \stdClass $data ) {
-	$dirty_value = $data->body['dirtyValue'];
+function save( \Barista\Ajax\Action_Response $response, \Barista\Ajax\Action_Request $request ) {
+	$dirty_value = $request['dirtyValue'];
 
 	$settings = Settings::get_instance();
 
-	$settings->update( $command['valueSourceKey'], $dirty_value );
+	$settings->update( $request->get_command()->valueSourceKey, $dirty_value );
 
-	wp_send_json_success(
+	return $response->success( __( 'Settings were saved successfully.', 'barista' ) )->data(
 		[
 			'baristaSettings' => $settings->get_all(),
-			'notification'    => [
-				'text' => __( 'Settings were saved successfully.', 'barista' ),
-			],
 		]
 	);
 }
 
 /**
  * Command to reset saved settings.
+ *
+ * @param \Barista\Ajax\Action_Response $response Response data.
  */
-function reset() {
+function reset( \Barista\Ajax\Action_Response $response ) {
 	Settings::get_instance()->reset();
 
-	wp_send_json_success(
+	return $response->success( __( 'All settings were reset successfully.', 'barista' ) )->data(
 		[
 			'baristaSettings' => [],
-			'notification'    => [
-				'text' => __( 'All settings were reset successfully.', 'barista' ),
-			],
 		]
 	);
 }

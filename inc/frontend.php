@@ -30,7 +30,7 @@ function get_admin_menus() { // phpcs:ignore Generic.Metrics.CyclomaticComplexit
 		require ABSPATH . 'wp-admin/menu.php';
 	}
 
-	$collection = Collection::get_instance()->get_items();
+	$collection = Collection::get_instance()->get_all();
 
 	wp_send_json_success( $collection );
 }

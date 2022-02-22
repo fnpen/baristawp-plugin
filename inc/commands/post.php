@@ -34,7 +34,7 @@ function add() {
 			'title'    => $post_type_object->labels->edit_item,
 			'icon'     => 'dashicons-edit',
 			'href'     => get_edit_post_link( get_the_ID(), 'url' ),
-			'hotkeys'  => [ 'e' ],
+			'hotkey'   => 'e',
 			'position' => 10,
 		];
 	}
@@ -46,7 +46,7 @@ function add() {
 			'title'    => $post_type_object->labels->view_item,
 			'icon'     => 'dashicons-external',
 			'href'     => get_permalink( $post->ID ),
-			'hotkeys'  => [ 'v' ],
+			'hotkey'   => 'v',
 			'position' => 10,
 		];
 	}

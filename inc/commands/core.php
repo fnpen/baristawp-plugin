@@ -9,28 +9,22 @@ declare(strict_types=1);
 
 namespace Barista\Commands\core;
 
-add_filter( 'barista_add_command', __NAMESPACE__ . '\\fill_id_by_title', 100, 1 );
-add_filter( 'barista_add_command', __NAMESPACE__ . '\\add_nonces', 101, 1 );
+add_filter( 'barista_add_command', __NAMESPACE__ . '\\add_nonce_title', 100, 1 );
 
 /**
- * Assigns id for command without predefined id.
+ * Assigns id and nonce for command.
  *
  * @param array $command Command.
  */
-function fill_id_by_title( array $command ): array {
+function add_nonce_title( array $command ): array {
 	if ( ! isset( $command['id'] ) ) {
-		$command['id'] = $command['title'];
-	}
-	return $command;
-}
+		$command['id'] = $command['title'] ?? '';
 
-/**
- * Adds nonce for command.
- *
- * @param array $command Command.
- */
-function add_nonces( array $command ): array {
-	$id               = $command['id'] ?? $command['title'];
-	$command['nonce'] = wp_create_nonce( 'barista_command_' . $id . '_' . $command['title'] );
+		if ( empty( $command['id'] ) ) {
+			$command['id'] = md5( implode( '-', [ $command['uxType'] ?? '', $command['title'] ?? '', $command['html'] ?? '' ] ) );
+		}
+	}
+
+	$command['nonce'] = wp_create_nonce( 'barista_command_' . $command['id'] . '_' . $command['title'] ?? '' );
 	return $command;
 }

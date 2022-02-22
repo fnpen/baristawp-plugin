@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.8.0 (2022-02-22)
+
+
+##### Features
+
+* Add date groups to Bookmarks
+* Bookmarks adding/removing from topbar
+* Dropdown for actions
+* Feature to output title and html
+* History
+* Implemented support to use on frontend
+* Improve notifications
+* Remove icon in Bookmarks
+* UX optimization for mobiles
+
+
+##### Bug Fixes
+
+* Fix issues with title warning
+
+
+##### Performance Improvements
+
+* Improved auto-scrolling speed
+
 ## 0.7.0 (2022-02-15)
 
 

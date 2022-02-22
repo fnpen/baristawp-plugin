@@ -9,14 +9,16 @@ declare(strict_types=1);
 
 namespace Barista;
 
-/**
- * Settings class.
- */
-class Settings extends Option {
+if ( ! class_exists( __NAMESPACE__ . '\\Settings' ) ) {
 	/**
-	 * Option name.
-	 *
-	 * @var string
+	 * Settings class.
 	 */
-	protected $option_name = 'settings';
+	class Settings extends Option {
+		/**
+		 * Option name.
+		 *
+		 * @var string
+		 */
+		protected $option_name = 'settings';
+	}
 }
