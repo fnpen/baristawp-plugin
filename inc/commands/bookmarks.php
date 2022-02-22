@@ -109,10 +109,15 @@ function bookmarks_to_commands( array $bookmarks ) {
 				'parent'           => 'bookmarks',
 				'id'               => $bookmark['id'],
 				'title'            => $bookmark['title'],
-				'href'             => $bookmark['url'],
 				'group'            => $group,
 				'iconRemoveAction' => 'remove_from_bookmarks',
+				'defaultAction'    => 'location',
 				'actions'          => [
+					[
+						'name'  => 'location',
+						'title' => __( 'Go to', 'barista' ),
+						'href'  => $bookmark['url'],
+					],
 					[
 						'name'  => 'remove_from_bookmarks',
 						'title' => __( 'Remove from Bookmarks', 'barista' ),

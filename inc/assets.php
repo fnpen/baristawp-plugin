@@ -62,18 +62,18 @@ function scripts() {
 		'script-barista',
 		'BARISTA_DATA',
 		[
-			'demo'        => defined( 'BARISTA_DEMO' ) ? constant( 'BARISTA_DEMO' ) : '',
-			'debug'       => WP_DEBUG,
-			'nonce'       => wp_create_nonce( 'barista-base' ),
-			'ajaxUrl'     => admin_url( 'admin-ajax.php' ),
-			'collection'  => Collection::get_instance()->get_all(),
-			'isAdmin'     => is_admin(),
+			'demo'       => defined( 'BARISTA_DEMO' ) ? constant( 'BARISTA_DEMO' ) : '',
+			'debug'      => WP_DEBUG,
+			'nonce'      => wp_create_nonce( 'barista-base' ),
+			'ajaxUrl'    => admin_url( 'admin-ajax.php' ),
+			'collection' => Collection::get_instance()->get_all(),
+			'isAdmin'    => is_admin(),
 			// 'openAtStart' => BARISTA_DEVELOPMENT,
 			// 'startParent'=> 'history',
 			// 'startParent'=> 'level1_1',
 			// 'startParent'=> 'woocommerce_settings_sections',
 			// 'startParent'=> 'barista-settings',
-			'settings'    => Settings::get_instance()->get_all(),
+			'settings'   => Settings::get_instance()->get_all(),
 		]
 	);
 

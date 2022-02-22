@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+### 0.8.8 (2022-02-22)
+
+
+##### Bug Fixes
+
+* Do not close dialog if command has children
+* Icon size for mask mode
+
 ### 0.8.7 (2022-02-22)
 
 

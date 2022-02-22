@@ -62,7 +62,7 @@ function add() {
 				'id'       => implode( '-', [ $root_id, $setting_id, $section_id ] ),
 				'title'    => implode( ' › ', [ $setting_label, $section_title ] ),
 				'position' => BARISTA_COMMAND_PRIORITY_WP_DASHBOARD,
-				'actions'          => [
+				'actions'  => [
 					[
 						'name'  => 'location',
 						'title' => __( 'Go to', 'barista' ),
