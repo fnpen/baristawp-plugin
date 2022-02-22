@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+### 0.8.7 (2022-02-22)
+
+
+##### Features
+
+* Bump version in composer.json
+
+### 0.8.6 (2022-02-22)
+
+### 0.8.5 (2022-02-22)
+
+### 0.8.4 (2022-02-22)
+
 ### 0.8.3 (2022-02-22)
 
 ### 0.8.2 (2022-02-22)

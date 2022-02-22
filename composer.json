@@ -2,8 +2,8 @@
   "name": "fnpen/barista",
   "description": "",
   "type": "wordpress-plugin",
-  "license": "GPL-3.0-or-later",
-  "version": "0.0.0",
+  "license": "ISC",
+  "version": "0.8.7",
   "require": {
     "php": ">=7.1"
   }
