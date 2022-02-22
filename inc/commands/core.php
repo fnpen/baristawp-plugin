@@ -21,10 +21,10 @@ function add_nonce_title( array $command ): array {
 		$command['id'] = $command['title'] ?? '';
 
 		if ( empty( $command['id'] ) ) {
-			$command['id'] = md5( implode( '-', [ $command['uxType'] ?? '', $command['title'] ?? '', $command['html'] ?? '' ] ) );
+			$command['id'] = md5( implode( '-', [ ($command['uxType'] ?? ''), ($command['title'] ?? ''), ($command['html'] ?? '') ] ) );
 		}
 	}
 
-	$command['nonce'] = wp_create_nonce( 'barista_command_' . $command['id'] . '_' . $command['title'] ?? '' );
+	$command['nonce'] = wp_create_nonce( 'barista_command_' . $command['id'] . '_' . ($command['title'] ?? '') );
 	return $command;
 }
