@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### 0.8.17 (2022-02-22)
+
+
+##### Features
+
+* Plugins activation/deactivation
+
 ### 0.8.16 (2022-02-22)
 
 

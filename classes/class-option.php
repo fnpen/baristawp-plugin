@@ -85,6 +85,17 @@ if ( ! class_exists( __NAMESPACE__ . '\\Option' ) ) {
 		}
 
 		/**
+		 * Remove option
+		 *
+		 * @return void
+		 */
+		public function remove() {
+			$this->data   = [];
+			$this->loaded = false;
+			delete_option( 'barista_' . $this->option_name );
+		}
+
+		/**
 		 * Reads settings from WP option.
 		 *
 		 * @return void

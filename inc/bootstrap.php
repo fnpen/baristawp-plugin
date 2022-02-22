@@ -11,6 +11,20 @@ namespace Barista;
 
 add_action( 'init', __NAMESPACE__ . '\\init' );
 
+require BARISTA_PLUGIN_DIR . '/vendor/autoload.php';
+require BARISTA_PLUGIN_DIR . '/inc/utils.php';
+require BARISTA_PLUGIN_DIR . '/inc/updating.php';
+require BARISTA_PLUGIN_DIR . '/classes/class-singleton.php';
+require BARISTA_PLUGIN_DIR . '/classes/class-action-request.php';
+require BARISTA_PLUGIN_DIR . '/classes/class-action-response.php';
+require BARISTA_PLUGIN_DIR . '/classes/class-option.php';
+require BARISTA_PLUGIN_DIR . '/classes/class-settings.php';
+require BARISTA_PLUGIN_DIR . '/classes/class-collection.php';
+require BARISTA_PLUGIN_DIR . '/classes/class-recently-edited-posts.php';
+require BARISTA_PLUGIN_DIR . '/classes/class-bookmarks.php';
+require BARISTA_PLUGIN_DIR . '/classes/class-history.php';
+require BARISTA_PLUGIN_DIR . '/inc/uninstall.php';
+
 /**
  * Init all hooks.
  */
@@ -19,18 +33,6 @@ function init() {
 		return;
 	}
 
-	require BARISTA_PLUGIN_DIR . '/vendor/autoload.php';
-	require BARISTA_PLUGIN_DIR . '/classes/class-singleton.php';
-	require BARISTA_PLUGIN_DIR . '/classes/class-action-request.php';
-	require BARISTA_PLUGIN_DIR . '/classes/class-action-response.php';
-	require BARISTA_PLUGIN_DIR . '/classes/class-option.php';
-	require BARISTA_PLUGIN_DIR . '/classes/class-settings.php';
-	require BARISTA_PLUGIN_DIR . '/classes/class-collection.php';
-	require BARISTA_PLUGIN_DIR . '/classes/class-recently-edited-posts.php';
-	require BARISTA_PLUGIN_DIR . '/classes/class-bookmarks.php';
-	require BARISTA_PLUGIN_DIR . '/classes/class-history.php';
-	require BARISTA_PLUGIN_DIR . '/inc/utils.php';
-	require BARISTA_PLUGIN_DIR . '/inc/updating.php';
 	require BARISTA_PLUGIN_DIR . '/inc/admin.php';
 	require BARISTA_PLUGIN_DIR . '/inc/frontend.php';
 	require BARISTA_PLUGIN_DIR . '/inc/assets.php';
@@ -49,7 +51,7 @@ function init() {
 function admin_init() {
 	global $menu, $menu_order, $default_menu_order, $_wp_menu_nopriv, $_wp_submenu_nopriv; // it's important for including.
 
-	if ( is_ajax() && 'barista_run_action' === $_REQUEST['action'] ) {
+	if ( defined( 'DOING_AJAX' ) && DOING_AJAX && 'barista_run_action' === $_REQUEST['action'] ) {
 		if ( ! defined( 'WP_NETWORK_ADMIN' ) ) {
 			define( 'WP_NETWORK_ADMIN', false );
 		}
