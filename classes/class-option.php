@@ -44,7 +44,7 @@ if ( ! class_exists( __NAMESPACE__ . '\\Option' ) ) {
 				$this->read_from_option();
 			}
 
-			return $this->data[ $name ];
+			return $this->data[ $name ] ?? null;
 		}
 
 		/**
