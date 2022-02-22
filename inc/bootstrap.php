@@ -15,6 +15,10 @@ add_action( 'init', __NAMESPACE__ . '\\init' );
  * Init all hooks.
  */
 function init() {
+	if( ! is_user_logged_in() ) {
+		return;
+	}
+
 	require BARISTA_PLUGIN_DIR . '/vendor/autoload.php';
 	require BARISTA_PLUGIN_DIR . '/classes/class-singleton.php';
 	require BARISTA_PLUGIN_DIR . '/classes/class-action-request.php';

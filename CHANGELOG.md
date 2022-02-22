@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### 0.8.16 (2022-02-22)
+
+
+##### Bug Fixes
+
+* Enable only for logged users
+
 ### 0.8.15 (2022-02-22)
 
 

@@ -3,7 +3,7 @@
   "description": "A blazing fast, highly extendable command launcher that helps to do your routine tasks much faster. You can search posts, control your site, and much more.",
   "type": "wordpress-plugin",
   "license": "ISC",
-  "version": "0.8.15",
+  "version": "0.8.16",
   "require": {
     "php": ">=7.1"
   }
