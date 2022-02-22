@@ -61,7 +61,7 @@ function scripts() {
 	\wp_localize_script(
 		'script-barista',
 		'BARISTA_DATA',
-		array_filter([
+		[
 			'demo'       => defined( 'BARISTA_DEMO' ) ? constant( 'BARISTA_DEMO' ) : '',
 			'debug'      => WP_DEBUG,
 			'nonce'      => wp_create_nonce( 'barista-base' ),
@@ -75,7 +75,7 @@ function scripts() {
 			// 'startParent'=> 'woocommerce_settings_sections',
 			// 'startParent'=> 'barista-settings',
 			'settings'   => Settings::get_instance()->get_all(),
-		])
+		]
 	);
 
 	Collection::get_instance()->reset();
