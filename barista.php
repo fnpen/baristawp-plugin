@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Barista
  * Plugin URI:        https://github.com/fnpen/baristawp-plugin
- * Description:       A blazingly fast, totally extendable command launcher. It lets you go your routine tasks faster, search posts, control your site, and much more.
+ * Description:       A blazing fast, highly extendable command launcher that helps to do your routine tasks much faster. You can search posts, control your site, and much more.
  *
  * Text Domain:       barista
  * Domain Path:       /languages
@@ -10,7 +10,7 @@
  * Author:            WP Busters
  * Author URI:        https://wpbusters.com/
  *
- * Version:           0.8.14
+ * Version:           0.8.15
  * Requires at least: 5.8
  * Tested up to:      5.9
  * Requires PHP:      7.1
@@ -26,7 +26,7 @@ define( 'BARISTA_PATH', \plugin_dir_path( __FILE__ ) );
 define( 'BARISTA_URL', \plugins_url( '/', __FILE__ ) );
 define( 'BARISTA_PLUGIN_FILE', __FILE__ );
 define( 'BARISTA_PLUGIN_DIR', __DIR__ );
-define( 'BARISTA_VERSION', '0.8.14' );
+define( 'BARISTA_VERSION', '0.8.15' );
 
 // define( 'BARISTA_DEMO', 'animate-up' ); phpcs:ignore Squiz.PHP.CommentedOutCode.Found.
 

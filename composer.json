@@ -1,9 +1,9 @@
 {
   "name": "fnpen/barista",
-  "description": "Barista is a blazingly fast, totally extendable command launcher. It lets you go your routine tasks faster, search posts, control your site, and much more.",
+  "description": "A blazing fast, highly extendable command launcher that helps to do your routine tasks much faster. You can search posts, control your site, and much more.",
   "type": "wordpress-plugin",
   "license": "ISC",
-  "version": "0.8.14",
+  "version": "0.8.15",
   "require": {
     "php": ">=7.1"
   }
