@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### 0.8.21 (2022-02-23)
+
+
+##### Bug Fixes
+
+* Loading bug for commands with children
+
 ### 0.8.20 (2022-02-23)
 
 ### 0.8.19 (2022-02-22)
