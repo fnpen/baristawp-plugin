@@ -83,7 +83,7 @@ function commands() {
 			'title'    => __( 'Bookmarks', 'barista' ),
 			'icon'     => 'dashicons-star-filled',
 			'group'    => __( 'Features', 'barista' ),
-			'actions'          => [
+			'actions'  => [
 				[
 					'name'        => 'enter',
 					'setAsParent' => true,
@@ -107,7 +107,7 @@ function commands() {
 function bookmarks_to_commands( array $bookmarks ) {
 	$collection = new Collection();
 
-	if( count($bookmarks) ) {
+	if ( count( $bookmarks ) ) {
 		foreach ( $bookmarks as $bookmark ) {
 			$group = timestamp_to_day_human( $bookmark['time'] );
 
@@ -179,7 +179,8 @@ function add_to_bookmarks( \Barista\Ajax\Action_Response $response, \Barista\Aja
 			]
 		)
 		->replace(
-			'bookmarks', false,
+			'bookmarks',
+			false,
 			bookmarks_to_commands( $bookmarks->get_all() )
 		);
 }
@@ -202,7 +203,8 @@ function remove_url_from_bookmarks( \Barista\Ajax\Action_Response $response, \Ba
 
 	if ( $result ) {
 		return $response->success( $result_text )->replace(
-			'bookmarks', false,
+			'bookmarks',
+			false,
 			bookmarks_to_commands( $bookmarks->get_all() )
 		);
 	}
@@ -226,7 +228,8 @@ function remove_item_from_bookmarks( \Barista\Ajax\Action_Response $response, \B
 
 	if ( $result ) {
 		return $response->success( $result_text )->replace(
-			'bookmarks', false,
+			'bookmarks',
+			false,
 			bookmarks_to_commands( $bookmarks->get_all() )
 		);
 	}

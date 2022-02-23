@@ -64,10 +64,10 @@ function load_children( \Barista\Ajax\Action_Response $response ) {
 
 	foreach ( $all_plugins as $plugin_file => $plugin ) {
 		$id    = COMMAND_NAME . '-' . $plugin_file;
-		$title = implode( ' ', array_filter([ $plugin['Title'], $plugin['Version'] ? '(v.' . $plugin['Version'] . ')' : '', 'by ' . $plugin['Author'] ] ));
+		$title = implode( ' ', array_filter( [ $plugin['Title'], $plugin['Version'] ? '(v.' . $plugin['Version'] . ')' : '', 'by ' . $plugin['Author'] ] ) );
 
 		$status = 'Inactive';
-		if( is_plugin_active( $plugin_file ) ) {
+		if ( is_plugin_active( $plugin_file ) ) {
 			$status = 'Active';
 		}
 
@@ -77,17 +77,17 @@ function load_children( \Barista\Ajax\Action_Response $response ) {
 			'title'       => $title,
 			'titleShort'  => $plugin['Title'],
 			'description' => $plugin['Description'],
-			'group' => $status,
+			'group'       => $status,
 			'icon'        => 'dashicons-admin-plugins',
-			'actions' => [
+			'actions'     => [
 				[
 					'title' => 'Activate',
-					'name' => 'activate_plugin',
+					'name'  => 'activate_plugin',
 				],
 				[
 					'title' => 'Deactivate',
-					'name' => 'deactivate_plugin',
-				]
+					'name'  => 'deactivate_plugin',
+				],
 			],
 			'suffix'      => $status,
 			'pluginFile'  => $plugin_file,
@@ -96,20 +96,20 @@ function load_children( \Barista\Ajax\Action_Response $response ) {
 	}
 
 	$mustuse_plugins = get_mu_plugins();
-	//dd($mustuse_plugins);
+	// dd($mustuse_plugins);
 
 	foreach ( $mustuse_plugins as $plugin_file => $plugin ) {
 		$id    = COMMAND_NAME . '-' . $plugin_file;
-		$title = implode( ' ', array_filter([ $plugin['Title'], $plugin['Version'] ? '(v.' . $plugin['Version'] . ')' : '', 'by ' . $plugin['Author'] ] ));
+		$title = implode( ' ', array_filter( [ $plugin['Title'], $plugin['Version'] ? '(v.' . $plugin['Version'] . ')' : '', 'by ' . $plugin['Author'] ] ) );
 
 		$items[] = [
 			'parent'      => COMMAND_NAME,
 			'id'          => $id,
 			'title'       => $title,
 			'titleShort'  => $plugin['Title'],
-			'selectable' => false,
+			'selectable'  => false,
 			'description' => $plugin['Description'],
-			'group' => 'Must-Use',
+			'group'       => 'Must-Use',
 			'icon'        => 'dashicons-admin-plugins',
 			'suffix'      => 'Active',
 			'pluginFile'  => $plugin_file,
@@ -138,10 +138,10 @@ function activate_plugin( \Barista\Ajax\Action_Response $response, \Barista\Ajax
 
 	$result = \activate_plugin( $request['pluginFile'], '', false, null );
 	if ( is_wp_error( $result ) ) {
-		return load_children($response)->failure( $result->get_error_message() );
+		return load_children( $response )->failure( $result->get_error_message() );
 	}
 
-	return load_children($response)->success( __( 'The plugin successfully activated.', 'barista' ) );
+	return load_children( $response )->success( __( 'The plugin successfully activated.', 'barista' ) );
 }
 
 
@@ -158,5 +158,5 @@ function deactivate_plugin( \Barista\Ajax\Action_Response $response, \Barista\Aj
 
 	\deactivate_plugins( $request['pluginFile'], '', false, null );
 
-	return load_children($response)->success( __( 'The plugin successfully deactivated.', 'barista' ) );
+	return load_children( $response )->success( __( 'The plugin successfully deactivated.', 'barista' ) );
 }

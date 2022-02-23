@@ -174,7 +174,7 @@ function wp_menu_to_collection() {
 				$collection = array_filter(
 					$collection,
 					function( $item ) use ( $link ) {
-						return isset($item['href']) && $item['href'] !== $link;
+						return isset( $item['href'] ) && $item['href'] !== $link;
 					}
 				);
 

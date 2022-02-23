@@ -29,7 +29,7 @@ require BARISTA_PLUGIN_DIR . '/inc/uninstall.php';
  * Init all hooks.
  */
 function init() {
-	if( ! is_user_logged_in() ) {
+	if ( ! is_user_logged_in() ) {
 		return;
 	}
 
@@ -51,7 +51,7 @@ function init() {
 function admin_init() {
 	global $menu, $menu_order, $default_menu_order, $_wp_menu_nopriv, $_wp_submenu_nopriv; // it's important for including.
 
-	if ( defined( 'DOING_AJAX' ) && DOING_AJAX && 'barista_run_action' === $_REQUEST['action'] ) {
+	if ( defined( 'DOING_AJAX' ) && DOING_AJAX && 'barista_run_action' === ($_REQUEST['action'] ?? '') ) {
 		if ( ! defined( 'WP_NETWORK_ADMIN' ) ) {
 			define( 'WP_NETWORK_ADMIN', false );
 		}
